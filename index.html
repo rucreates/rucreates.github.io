@@ -3,8 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rucreates — Digital Presence for Restaurants</title>
+    <title>Ru Creates — Restaurant Digital Marketing & Web Design</title>
+    <meta name="description" content="Ru Creates helps restaurants grow their digital presence — from professional websites to WhatsApp automation, social media and brand consistency. Based in South Africa." />
+    <meta name="keywords" content="restaurant digital marketing, restaurant website design, restaurant social media, WhatsApp for restaurants, South Africa restaurant marketing, Ru Creates" />
+    <meta name="author" content="Ru Creates" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://rucreates.co/" />
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn previews) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rucreates.co/" />
+    <meta property="og:title" content="Ru Creates — Restaurant Digital Marketing & Web Design" />
+    <meta property="og:description" content="We help restaurants grow their digital presence — from your website to your WhatsApp, every customer touchpoint working for you." />
+    <meta property="og:image" content="https://rucreates.co/typography.png" />
+    <meta property="og:site_name" content="Ru Creates" />
+    <meta property="og:locale" content="en_ZA" />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://rucreates.co/" />
+    <meta name="twitter:title" content="Ru Creates — Restaurant Digital Marketing & Web Design" />
+    <meta name="twitter:description" content="We help restaurants grow their digital presence — from your website to your WhatsApp, every customer touchpoint working for you." />
+    <meta name="twitter:image" content="https://rucreates.co/typography.png" />
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MarketingAgency",
+      "name": "Ru Creates",
+      "url": "https://rucreates.co",
+      "logo": "https://rucreates.co/logo.png",
+      "description": "Ru Creates helps restaurants grow their digital presence through professional websites, social media management, WhatsApp automation and brand strategy.",
+      "email": "hello@rucreates.co",
+      "areaServed": "ZA",
+      "sameAs": [
+        "https://www.instagram.com/rucreatesofficial"
+      ],
+      "knowsAbout": ["Restaurant Marketing", "Web Design", "Social Media Management", "WhatsApp Automation", "Brand Strategy"],
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Foundation",
+          "description": "Professional website and digital setup for restaurants starting fresh."
+        },
+        {
+          "@type": "Offer",
+          "name": "Growth",
+          "description": "Full digital presence management to turn your online presence into a consistent revenue driver."
+        },
+        {
+          "@type": "Offer",
+          "name": "Full Partner",
+          "description": "Hands-on digital partner managing everything from social media to paid ads."
+        }
+      ]
+    }
+    </script>
+
     <link rel="icon" type="image/png" href="logo.png" />
+    <link rel="apple-touch-icon" href="logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -35,6 +93,7 @@
       }
       html {
         scroll-behavior: smooth;
+        overflow-x: hidden;
       }
       body {
         font-family: "Outfit", sans-serif;
@@ -42,6 +101,7 @@
         color: var(--cream);
         line-height: 1.6;
         overflow-x: hidden;
+        width: 100%;
         cursor: none;
       }
       h1,
@@ -220,16 +280,19 @@
       }
       .hero-bg-mark {
         position: absolute;
-        right: -8%;
+        right: -5%;
         top: 50%;
         transform: translateY(-50%);
         opacity: 0.04;
         pointer-events: none;
+        user-select: none;
         font-family: "Cormorant Garamond", serif;
-        font-size: clamp(280px, 38vw, 560px);
+        font-size: clamp(180px, 30vw, 560px);
         font-weight: 700;
         color: var(--gold);
         line-height: 1;
+        max-width: 100%;
+        overflow: hidden;
         animation: bgFloat 12s ease-in-out infinite;
       }
       @keyframes bgFloat {
@@ -423,6 +486,8 @@
       /* ── Section ── */
       section {
         padding: 110px 6%;
+        overflow-x: hidden;
+        max-width: 100%;
       }
       .section-eyebrow {
         display: flex;
@@ -1085,6 +1150,8 @@
         background: var(--teal-deep);
         padding: 60px 6% 36px;
         border-top: 1px solid var(--gold-border);
+        overflow-x: hidden;
+        max-width: 100%;
       }
       .footer-top {
         display: flex;
@@ -1212,7 +1279,7 @@
           display: none;
           flex-direction: column;
           position: absolute;
-          top: 80px;
+          top: 130px;
           left: 0;
           right: 0;
           background: rgba(10, 46, 44, 0.98);
