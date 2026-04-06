@@ -102,7 +102,6 @@
         line-height: 1.6;
         overflow-x: hidden;
         width: 100%;
-        cursor: none;
       }
       h1,
       h2,
@@ -115,43 +114,39 @@
         text-decoration: none;
       }
 
-      /* ── Cursor ── */
-      .cursor {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: var(--gold);
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition:
-          width 0.2s,
-          height 0.2s;
-        mix-blend-mode: difference;
+      /* ── Cursor (desktop only) ── */
+      @media (pointer: fine) {
+        body { cursor: none; }
+        .cursor {
+          position: fixed;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: var(--gold);
+          pointer-events: none;
+          z-index: 9999;
+          transform: translate(-50%, -50%);
+          transition: width 0.2s, height 0.2s;
+          mix-blend-mode: difference;
+        }
+        .cursor-ring {
+          position: fixed;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 1px solid rgba(200, 183, 131, 0.5);
+          pointer-events: none;
+          z-index: 9998;
+          transform: translate(-50%, -50%);
+          transition: width 0.3s, height 0.3s, border-color 0.3s;
+        }
+        .cursor.expand { width: 20px; height: 20px; }
+        .cursor-ring.expand { width: 56px; height: 56px; border-color: var(--gold); }
       }
-      .cursor-ring {
-        position: fixed;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: 1px solid rgba(200, 183, 131, 0.5);
-        pointer-events: none;
-        z-index: 9998;
-        transform: translate(-50%, -50%);
-        transition:
-          width 0.3s,
-          height 0.3s,
-          border-color 0.3s;
-      }
-      .cursor.expand {
-        width: 20px;
-        height: 20px;
-      }
-      .cursor-ring.expand {
-        width: 56px;
-        height: 56px;
-        border-color: var(--gold);
+      @media (pointer: coarse) {
+        .cursor, .cursor-ring { display: none !important; }
+        body { cursor: auto; }
+        .nav-toggle { cursor: pointer; }
       }
 
       /* ── Nav ── */
@@ -254,18 +249,103 @@
       .nav-toggle {
         display: none;
         flex-direction: column;
-        gap: 5px;
-        cursor: none;
+        gap: 6px;
+        cursor: pointer;
         background: none;
         border: none;
         padding: 4px;
+        z-index: 201;
+        position: relative;
       }
       .nav-toggle span {
         display: block;
-        width: 22px;
+        width: 24px;
         height: 1.5px;
         background: var(--cream);
-        transition: all 0.3s;
+        transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+        transform-origin: center;
+      }
+      .nav-toggle.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); background: var(--gold); }
+      .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .nav-toggle.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); background: var(--gold); }
+
+      /* ── Full-page mobile overlay ── */
+      .mobile-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(10, 46, 44, 0.88);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+      .mobile-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .mobile-overlay .overlay-links {
+        list-style: none;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .mobile-overlay .overlay-links li {
+        overflow: hidden;
+      }
+      .mobile-overlay .overlay-links a {
+        display: block;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.4rem, 10vw, 4rem);
+        font-weight: 600;
+        color: var(--cream);
+        letter-spacing: -0.01em;
+        padding: 0.3rem 0;
+        transform: translateY(100%);
+        transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), color 0.2s;
+      }
+      .mobile-overlay.open .overlay-links a {
+        transform: translateY(0);
+      }
+      .mobile-overlay.open .overlay-links li:nth-child(1) a { transition-delay: 0.08s; }
+      .mobile-overlay.open .overlay-links li:nth-child(2) a { transition-delay: 0.14s; }
+      .mobile-overlay.open .overlay-links li:nth-child(3) a { transition-delay: 0.20s; }
+      .mobile-overlay.open .overlay-links li:nth-child(4) a { transition-delay: 0.26s; }
+      .mobile-overlay .overlay-links a:hover { color: var(--gold); }
+      .mobile-overlay .overlay-links a span {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-family: "Outfit", sans-serif;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        vertical-align: middle;
+        margin-right: 8px;
+        opacity: 0.7;
+      }
+      .mobile-overlay-footer {
+        position: absolute;
+        bottom: 2.5rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .mobile-overlay-footer a { color: var(--gold); }
+      .overlay-gold-line {
+        width: 40px;
+        height: 1px;
+        background: var(--gold);
+        margin: 1.5rem auto;
+        opacity: 0.4;
       }
 
       /* ── Hero ── */
@@ -1275,24 +1355,9 @@
         .steps-wrap::before {
           display: none;
         }
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          position: absolute;
-          top: 130px;
-          left: 0;
-          right: 0;
-          background: rgba(10, 46, 44, 0.98);
-          padding: 1.5rem 6%;
-          gap: 1.25rem;
-          border-bottom: 1px solid var(--gold-border);
-        }
-        .nav-links.open {
-          display: flex;
-        }
-        .nav-toggle {
-          display: flex;
-        }
+        .nav-links { display: none; }
+        .mobile-overlay { display: flex; }
+        .nav-toggle { display: flex; }
       }
       @media (max-width: 600px) {
         section {
@@ -1335,6 +1400,18 @@
         <li><a href="#contact" class="btn-nav">Get in Touch</a></li>
       </ul>
     </nav>
+
+    <!-- ── Mobile overlay ── -->
+    <div class="mobile-overlay" id="mobileOverlay">
+      <ul class="overlay-links">
+        <li><a href="#services" class="overlay-link"><span>01</span>Services</a></li>
+        <li><a href="#how" class="overlay-link"><span>02</span>Process</a></li>
+        <li><a href="#about" class="overlay-link"><span>03</span>About</a></li>
+        <li><a href="#contact" class="overlay-link"><span>04</span>Contact</a></li>
+      </ul>
+      <div class="overlay-gold-line"></div>
+      <p class="mobile-overlay-footer"><a href="mailto:hello@rucreates.co">hello@rucreates.co</a></p>
+    </div>
 
     <!-- ── Hero ── -->
     <section id="hero">
@@ -2240,47 +2317,53 @@
     </footer>
 
     <script>
+      const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
       const cursor = document.getElementById("cursor");
       const ring = document.getElementById("cursorRing");
-      let mx = 0,
-        my = 0,
-        rx = 0,
-        ry = 0;
-      document.addEventListener("mousemove", (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-        cursor.style.left = mx + "px";
-        cursor.style.top = my + "px";
-      });
-      (function animRing() {
-        rx += (mx - rx) * 0.12;
-        ry += (my - ry) * 0.12;
-        ring.style.left = rx + "px";
-        ring.style.top = ry + "px";
-        requestAnimationFrame(animRing);
-      })();
-      document
-        .querySelectorAll(
-          "a,button,.problem-card,.service-card,.contact-channel,.value-card",
-        )
-        .forEach((el) => {
-          el.addEventListener("mouseenter", () => {
-            cursor.classList.add("expand");
-            ring.classList.add("expand");
-          });
-          el.addEventListener("mouseleave", () => {
-            cursor.classList.remove("expand");
-            ring.classList.remove("expand");
-          });
+      if (!isTouchDevice && cursor && ring) {
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener("mousemove", (e) => {
+          mx = e.clientX; my = e.clientY;
+          cursor.style.left = mx + "px";
+          cursor.style.top = my + "px";
         });
+        (function animRing() {
+          rx += (mx - rx) * 0.12;
+          ry += (my - ry) * 0.12;
+          ring.style.left = rx + "px";
+          ring.style.top = ry + "px";
+          requestAnimationFrame(animRing);
+        })();
+        document.querySelectorAll("a,button,.problem-card,.service-card,.contact-channel,.value-card").forEach((el) => {
+          el.addEventListener("mouseenter", () => { cursor.classList.add("expand"); ring.classList.add("expand"); });
+          el.addEventListener("mouseleave", () => { cursor.classList.remove("expand"); ring.classList.remove("expand"); });
+        });
+      }
       const toggle = document.getElementById("navToggle");
-      const links = document.getElementById("navLinks");
-      toggle.addEventListener("click", () => links.classList.toggle("open"));
-      links
-        .querySelectorAll("a")
-        .forEach((a) =>
-          a.addEventListener("click", () => links.classList.remove("open")),
-        );
+      const overlay = document.getElementById("mobileOverlay");
+
+      const closeOverlay = () => {
+        overlay.classList.remove("open");
+        toggle.classList.remove("open");
+        document.body.style.overflow = "";
+      };
+
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = overlay.classList.toggle("open");
+        toggle.classList.toggle("open", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
+      });
+
+      // Click on a link — navigate and close
+      overlay.querySelectorAll("a").forEach((a) => {
+        a.addEventListener("click", closeOverlay);
+      });
+
+      // Click on the backdrop (not on the links themselves) — close
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeOverlay();
+      });
       window.addEventListener(
         "scroll",
         () => {
